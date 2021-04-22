@@ -8,6 +8,7 @@ export default {
 
     if (!name || !email || !cellphone || !password || !confirmPassword)
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "miss some default field, please try again",
       });
 
@@ -15,11 +16,14 @@ export default {
 
     if (password !== confirmPassword) {
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "the passwords must be equal",
       });
     }
     if (registerAlreadyExist) {
-      return res.status(400).json({ msg: "register already exist" });
+      return res
+        .status(400)
+        .json({ endpoint: req.originalUrl, msg: "register already exist" });
     }
 
     const hashedPassword = MD5(password).toString();
@@ -33,13 +37,14 @@ export default {
 
     await savesRegister.save();
 
-    return res.status(201).json(savesRegister);
+    return res.status(201).json({ endpoint: req.originalUrl, savesRegister });
   },
   login: async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password)
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "miss some default field, please try again",
       });
 
@@ -50,6 +55,7 @@ export default {
 
     if (!findUser) {
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "check if your password or your email is correct, please",
       });
     }
@@ -63,6 +69,7 @@ export default {
     res.set("sessionId", [newSession._id]);
 
     return res.status(201).json({
+      endpoint: req.originalUrl,
       msg: "logged",
       sessionId: newSession._id,
     });
@@ -78,15 +85,18 @@ export default {
       });
       if (!findedAndDeletedSession) {
         return res.status(400).json({
+          endpoint: req.originalUrl,
           msg: "error",
         });
       }
       return res.status(200).json({
+        endpoint: req.originalUrl,
         msg: "logout done",
         closedSession: findingAOpenSession,
       });
     } catch (error) {
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "error",
       });
     }

@@ -11,11 +11,13 @@ export default {
       const { name, email, cellphone } = findUser;
 
       return res.json({
+        endpoint: req.originalUrl,
         msg: "user details",
         userDetails: { name, email, cellphone },
       });
     } catch (error) {
       return res.status(400).json({
+        endpoint: req.originalUrl,
         msg: "error",
       });
     }

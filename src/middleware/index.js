@@ -6,6 +6,7 @@ export function checkSession(req, res, next) {
   }
 
   return res.status(400).json({
+    endpoint: req.originalUrl,
     msg: "login necessary to see this page",
   });
 }
