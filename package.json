@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node bin/dev",
-    "build": "mkdir dist && babel src --out-dir dist",
+    "start:build": "rm -rf dist || mkdir dist && babel src --out-dir dist && node ./dist/server.js",
+    "start": "node ./dist/server.js",
+    "build": "rm -rf dist || mkdir dist && babel src --out-dir dist",
     "dev": "nodemon --exec babel-node ./src/server.js"
   },
   "dependencies": {
