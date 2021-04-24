@@ -6,7 +6,7 @@ const Session = new Schema({
     ref: "users",
     required: true,
   },
-  data: {
+  createdAt: {
     type: Date,
     default: Date.now(),
   },
